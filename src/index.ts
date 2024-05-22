@@ -26,7 +26,7 @@ app.get("/", (req: any, res: any) => {
   console.log("home");
 });
 
-const port: number = 3001; // You can choose any port
+const port: number = 3000; // You can choose any port
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
