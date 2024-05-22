@@ -1,0 +1,17 @@
+-- CreateTable
+CREATE TABLE "Goal" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "target_weight" INTEGER NOT NULL DEFAULT 0,
+    "caloric_adjustment" INTEGER NOT NULL DEFAULT 0,
+    "surplus" BOOLEAN NOT NULL DEFAULT true,
+    "protein" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "fats" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "carbs" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "activity_level" DOUBLE PRECISION NOT NULL DEFAULT 1.2,
+
+    CONSTRAINT "Goal_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Goal" ADD CONSTRAINT "Goal_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
