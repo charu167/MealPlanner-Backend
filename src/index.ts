@@ -14,6 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req: any, res: any) => {
+  console.log("MealPlanner Home");
+});
+
 app.use("/auth", authRouter);
 
 app.use(isAuthenticated);
@@ -21,10 +25,6 @@ app.use("/meal", mealRouter);
 app.use("/plan", planRouter);
 app.use("/user", userRouter);
 app.use("/goal", goalRouter);
-
-app.get("/", (req: any, res: any) => {
-  console.log("home");
-});
 
 const port: number = 3001; // You can choose any port
 app.listen(port, () => {
