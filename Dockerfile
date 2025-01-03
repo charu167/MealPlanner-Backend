@@ -30,6 +30,7 @@ EXPOSE 3001
 
 # Set environment variable
 ENV NODE_ENV=production
-
+ENV DATABASE_URL=postgresql://nutricraft_owner:crQIk9tJZ6hs@ep-dry-brook-a5q05lmz-pooler.us-east-2.aws.neon.tech/nutricraft?sslmode=require
+ENV JWT_PASSWORD=b7r%l0hh.
 # Run the app when the container launches
 CMD ["node", "dist/index.js"]
