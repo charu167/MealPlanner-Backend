@@ -22,7 +22,8 @@ function getUserDetails(req, res) {
                 },
                 select: {
                     id: true,
-                    username: true,
+                    firstname: true,
+                    lastname: true,
                     gender: true,
                     height: true,
                     weight: true,

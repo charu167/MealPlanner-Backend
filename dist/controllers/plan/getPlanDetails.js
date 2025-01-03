@@ -14,19 +14,39 @@ const prisma = new client_1.PrismaClient();
 function getPlanDetails(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const planId = Number(req.query.planId);
-            const result = yield prisma.plan.findUnique({
+            // Extract planId from route parameters
+            const { planId } = req.params;
+            // Convert planId to a number
+            const parsedPlanId = Number(planId);
+            // Validate that planId is a valid positive integer
+            if (isNaN(parsedPlanId) || parsedPlanId <= 0) {
+                return res.status(400).json({ error: "Invalid planId provided." });
+            }
+            // Fetch the plan with associated PlanMeals and their PlanMealFoods
+            const plan = yield prisma.plan.findUnique({
                 where: {
-                    id: planId,
+                    id: parsedPlanId,
                 },
                 include: {
-                    PlanMeals: true,
+                    PlanMeals: {
+                        include: {
+                            PlanMealFoods: true, // Include all PlanMealFoods for each PlanMeal
+                        },
+                    },
                 },
             });
-            res.status(200).json(result);
+            // If the plan does not exist, return a 404 error
+            if (!plan) {
+                return res.status(404).json({ error: "Plan not found." });
+            }
+            // Return the retrieved plan details
+            return res.status(200).json(plan);
         }
         catch (error) {
-            console.log(error);
+            // Log the error for server-side debugging
+            console.error("Error fetching plan details:", error);
+            // Respond with a generic server error message
+            return res.status(500).json({ error: "Internal server error." });
         }
     });
 }

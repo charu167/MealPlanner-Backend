@@ -16,7 +16,7 @@ export function isAuthenticated(
     }
 
     req.user = user;
-    console.log(user);
+
     next();
   });
 }

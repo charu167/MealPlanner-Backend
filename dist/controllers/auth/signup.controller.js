@@ -25,7 +25,7 @@ function createUser(req, res) {
             const result = yield prisma.user.create({
                 data,
                 select: {
-                    username: true,
+                    firstname: true,
                     email: true,
                     id: true,
                 },
@@ -35,8 +35,7 @@ function createUser(req, res) {
                     userId: result.id,
                 },
             });
-            const { access_token, refresh_token } = (0, jwt_1.generateTokens)(result.email, result.username, result.id);
-            console.log(result);
+            const { access_token, refresh_token } = (0, jwt_1.generateTokens)(result.email, result.firstname, result.id);
             res
                 .status(200)
                 .json({ message: "Signed Up :)", access_token, refresh_token });

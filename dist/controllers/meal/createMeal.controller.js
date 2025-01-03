@@ -14,22 +14,34 @@ const prisma = new client_1.PrismaClient();
 function createMeal(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
+        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
         try {
-            const data = {
-                name: req.body.name,
-                userId: Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.id),
-            };
+            const data = req.body;
+            if (!data) {
+                res.status(400).json({ message: "Data not found" });
+            }
             const result = yield prisma.meal.create({
-                data,
+                data: {
+                    name: data.name,
+                    userId: Number(userId),
+                    MealFoods: {
+                        create: data.MealFoods.map((food) => ({
+                            foodName: food.foodName,
+                            foodId: food.foodId,
+                            quantity: food.quantity,
+                        })),
+                    },
+                },
                 select: {
                     id: true,
                     name: true,
+                    MealFoods: true,
                 },
             });
             res.status(200).json(result);
         }
         catch (error) {
-            res.status(400).json({ message: error });
+            res.status(500).json({ message: "Oops something went wrong", error });
             console.log(error);
         }
     });

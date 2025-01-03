@@ -1,0 +1,17 @@
+version: '3.8'  # Specify the Docker Compose version
+
+services:
+  backend:
+    build:
+      context: .  # Path to your Dockerfile
+      dockerfile: Dockerfile
+    image: meal_planner_backend  # Name of the Docker image
+    container_name: meal_planner_backend_container  # Optional: Name of the container
+    ports:
+      - "3001:3001"  # Map host port 3001 to container port 3001
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_PASSWORD=${JWT_PASSWORD}
+    # restart: unless-stopped  # Automatically restart the container unless it's explicitly stopped
+   
+

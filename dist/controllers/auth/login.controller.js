@@ -27,13 +27,13 @@ function login(req, res) {
                 },
                 select: {
                     password: true,
-                    username: true,
+                    firstname: true,
                     email: true,
                     id: true,
                 },
             });
             if (user && (yield bcrypt_1.default.compare(data.password, user === null || user === void 0 ? void 0 : user.password))) {
-                const { access_token, refresh_token } = (0, jwt_1.generateTokens)(user === null || user === void 0 ? void 0 : user.username, user === null || user === void 0 ? void 0 : user.email, user.id);
+                const { access_token, refresh_token } = (0, jwt_1.generateTokens)(user === null || user === void 0 ? void 0 : user.firstname, user === null || user === void 0 ? void 0 : user.email, user.id);
                 res
                     .status(200)
                     .json({ message: "Logged in :)", access_token, refresh_token });

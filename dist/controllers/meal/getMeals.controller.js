@@ -16,32 +16,16 @@ function getMeals(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         try {
-            const id = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
+            const userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
             const result = yield prisma.meal.findMany({
                 where: {
-                    userId: id,
+                    userId: userId,
                 },
-                select: {
-                    name: true,
-                    id: true,
-                },
-            });
-            const result1 = yield prisma.user.findUnique({
-                where: {
-                    id: id,
-                },
-                select: {
-                    Meal: {
-                        select: {
-                            id: true,
-                            name: true,
-                            MealFoods: true,
-                        },
-                    },
+                include: {
+                    MealFoods: true,
                 },
             });
-            res.status(200).json(result1);
-            console.log(result);
+            res.status(200).json(result);
         }
         catch (error) {
             console.log(error);

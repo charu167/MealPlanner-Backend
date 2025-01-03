@@ -9,7 +9,8 @@ const prisma = new PrismaClient();
 
 export async function createUser(req: Request, res: Response) {
   interface Data {
-    username: string;
+    firstname: string;
+    lastname: string;
     email: string;
     password: string;
     gender: string;
@@ -24,7 +25,7 @@ export async function createUser(req: Request, res: Response) {
     const result = await prisma.user.create({
       data,
       select: {
-        username: true,
+        firstname: true,
         email: true,
         id: true,
       },
@@ -38,10 +39,10 @@ export async function createUser(req: Request, res: Response) {
 
     const { access_token, refresh_token } = generateTokens(
       result.email,
-      result.username,
+      result.firstname,
       result.id
     );
-    console.log(result);
+
     res
       .status(200)
       .json({ message: "Signed Up :)", access_token, refresh_token });

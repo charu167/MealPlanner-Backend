@@ -16,7 +16,8 @@ function updateUserDetails(req, res) {
         var _a;
         try {
             const userId = Number((_a = req.user) === null || _a === void 0 ? void 0 : _a.id);
-            const username = req.body.username;
+            const firstname = req.body.firstname;
+            const lastname = req.body.lastname;
             const date_of_birth = req.body.date_of_birth;
             const gender = req.body.gender;
             const height = Number(req.body.height);
@@ -27,7 +28,8 @@ function updateUserDetails(req, res) {
                     id: userId,
                 },
                 data: {
-                    username: username,
+                    firstname: firstname,
+                    lastname: lastname,
                     date_of_birth: date_of_birth,
                     gender: gender,
                     height: height,

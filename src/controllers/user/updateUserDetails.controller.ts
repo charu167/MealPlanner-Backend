@@ -6,7 +6,8 @@ const prisma = new PrismaClient();
 export default async function updateUserDetails(req: Request, res: Response) {
   try {
     const userId = Number(req.user?.id);
-    const username = req.body.username;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
     const date_of_birth = req.body.date_of_birth;
     const gender = req.body.gender;
     const height = Number(req.body.height);
@@ -17,7 +18,8 @@ export default async function updateUserDetails(req: Request, res: Response) {
         id: userId,
       },
       data: {
-        username: username,
+        firstname: firstname,
+        lastname: lastname,
         date_of_birth: date_of_birth,
         gender: gender,
         height: height,

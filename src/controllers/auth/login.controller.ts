@@ -22,7 +22,7 @@ export async function login(req: Request, res: Response) {
       },
       select: {
         password: true,
-        username: true,
+        firstname: true,
         email: true,
         id: true,
       },
@@ -30,7 +30,7 @@ export async function login(req: Request, res: Response) {
 
     if (user && (await bcrypt.compare(data.password, user?.password))) {
       const { access_token, refresh_token } = generateTokens(
-        user?.username,
+        user?.firstname,
         user?.email,
         user.id
       );

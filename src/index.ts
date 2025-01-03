@@ -14,8 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req: any, res: any) => {
-  console.log("MealPlanner Home");
+app.get("/", (req: express.Request, res: express.Response) => {
+  res.send("MealPlanner Home");
 });
 
 app.use("/auth", authRouter);

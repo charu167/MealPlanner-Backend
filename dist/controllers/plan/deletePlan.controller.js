@@ -14,20 +14,23 @@ const prisma = new client_1.PrismaClient();
 function deletePlan(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const planId = Number(req.query.planId);
+            const { planId } = req.params;
+            if (!planId) {
+                res.status(400).json({ message: "planId not provided" });
+            }
             const result = yield prisma.plan.delete({
                 where: {
-                    id: planId,
+                    id: Number(planId),
                 },
                 select: {
                     id: true,
                     name: true,
                 },
             });
-            res.status(200).json(result);
+            res.status(200).json({ message: "Plan deleted successfully!", result });
         }
         catch (error) {
-            console.log(error);
+            res.status(500).json({ message: "Oops! Something went wrong", error });
         }
     });
 }

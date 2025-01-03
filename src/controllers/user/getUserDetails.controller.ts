@@ -12,7 +12,8 @@ export default async function getUserDetails(req: Request, res: Response) {
       },
       select: {
         id: true,
-        username: true,
+        firstname: true,
+        lastname: true,
         gender: true,
         height: true,
         weight: true,

@@ -15,7 +15,8 @@ datasource db {
 
 model User {
   id            Int      @id @default(autoincrement())
-  username      String
+  firstname     String
+  lastname      String
   email         String   @unique
   password      String
   gender        String
@@ -67,10 +68,21 @@ model Plan {
 }
 
 model PlanMeals {
-  id       Int    @id @default(autoincrement())
-  plan     Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
-  planId   Int
-  meal     Meal   @relation(fields: [mealId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  mealId   Int
-  mealName String @default("mealName")
+  id            Int             @id @default(autoincrement())
+  plan          Plan            @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId        Int
+  meal          Meal            @relation(fields: [mealId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  mealId        Int
+  mealName      String          @default("mealName")
+  PlanMealFoods PlanMealFoods[]
+}
+
+model PlanMealFoods {
+  id         Int       @id @default(autoincrement())
+  planMealId Int
+  planMeal   PlanMeals @relation(fields: [planMealId], references: [id], onDelete: Cascade)
+
+  foodName String
+  foodId   String
+  quantity Int    @default(100)
 }

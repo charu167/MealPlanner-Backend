@@ -5,34 +5,17 @@ const prisma = new PrismaClient();
 // Get All Meals and Their food items
 export default async function getMeals(req: Request, res: Response) {
   try {
-    const id = Number(req.user?.id);
+    const userId = Number(req.user?.id);
     const result = await prisma.meal.findMany({
       where: {
-        userId: id,
+        userId: userId,
       },
-      select: {
-        name: true,
-        id: true,
-      },
-    });
-
-    const result1 = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-      select: {
-        Meal: {
-          select: {
-            id: true,
-            name: true,
-            MealFoods: true,
-          },
-        },
+      include: {
+        MealFoods: true,
       },
     });
 
-    res.status(200).json(result1);
-    console.log(result);
+    res.status(200).json(result);
   } catch (error) {
     console.log(error);
   }
