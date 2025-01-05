@@ -31,5 +31,4 @@ app.use("/goal", goalRouter);
 const port: number = 3001; // You can choose any port
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
-  console.log("JWT_PASSWORD", process.env.JWT_PASSWORD)
 });

@@ -17,7 +17,7 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.get("/", (req, res) => {
-    console.log("MealPlanner Home");
+    res.send("MealPlanner Home");
 });
 app.use("/auth", auth_routes_1.default);
 app.use(auth_middleware_1.isAuthenticated);
