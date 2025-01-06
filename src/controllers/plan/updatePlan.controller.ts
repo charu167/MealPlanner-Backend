@@ -45,31 +45,34 @@ export default async function updatePlan(req: Request, res: Response) {
 
   try {
     // 1) Perform the nested update as usual
+
     await prisma.plan.update({
       where: { id: parsedPlanId },
       data: {
-        name: name,
-        PlanMeals: {
-          update: {
-            where: { id: planMeal?.id },
-            data: {
-              PlanMealFoods: {
-                create: planMeal?.planMealFoodsToCreate?.map((food) => ({
-                  foodId: food.foodId,
-                  foodName: food.foodName,
-                  quantity: food.quantity,
-                })),
-                update: planMeal?.planMealFoodsToUpdate?.map((food) => ({
-                  where: { id: food.id },
-                  data: { quantity: food.quantity },
-                })),
-                delete: planMeal?.planMealFoodsToDelete?.map((food) => ({
-                  id: food.id,
-                })),
+        name,
+        PlanMeals: planMeal?.id
+          ? {
+              update: {
+                where: { id: planMeal?.id },
+                data: {
+                  PlanMealFoods: {
+                    create: planMeal?.planMealFoodsToCreate?.map((food) => ({
+                      foodId: food.foodId,
+                      foodName: food.foodName,
+                      quantity: food.quantity,
+                    })),
+                    update: planMeal?.planMealFoodsToUpdate?.map((food) => ({
+                      where: { id: food.id },
+                      data: { quantity: food.quantity },
+                    })),
+                    delete: planMeal?.planMealFoodsToDelete?.map((food) => ({
+                      id: food.id,
+                    })),
+                  },
+                },
               },
-            },
-          },
-        },
+            }
+          : {},
       },
       // We no longer do `include: {...}` to avoid returning the entire plan
     });
